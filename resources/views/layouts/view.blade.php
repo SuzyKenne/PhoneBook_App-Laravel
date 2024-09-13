@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <title>Create Contact</title>
+    <title>Contact view</title>
     <style>
         
         .main-content {
@@ -130,12 +130,16 @@
                         <img src="{{ asset('icons/maki_arrow.png') }}" alt="">
                     </a>
                     <div class="view-button">
-                        <button type="submit" class="save-button">
+                        <a href="{{ route('contacts.edit', $contact->id) }}" class="save-button">
                         <img src="{{ asset('icons/Frame 71.png') }}" alt="">                       
-                        </button>   
-                        <button class="delete-button">
-                            <img src="{{ asset('/icons/uiw_delete.png') }}" alt=""> 
-                        </button>   
+                        </a>   
+                        <form method="POST" action="{{ route('contacts.destroy', $contact->id) }}" onsubmit="return confirm('Are you sure you want to delete this contact?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="delete-button">
+                                <img src="{{ asset('icons/uiw_delete.png') }}" alt="Delete Contact">
+                            </button>
+                        </form> 
                     </div>                                                         
                 </div>
                 <div class="avatar-placeholder">
