@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name'); 
             $table->string('number'); 
             $table->string('email')->unique();
-            $table->string('image')->default('icons/images.png'); // Default image path
+            $table->string('image')->nullable(); // Default image path
             $table->timestamps(); // Laravel's created_at and updated_at timestamps
         });
     }
