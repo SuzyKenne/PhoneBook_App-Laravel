@@ -82,30 +82,31 @@
         }
         form ,h3{
             margin: 15px;
+            display: inline-block;
         }
         .form-group {
-            margin: 15px;
+            display: inline-block;
+            flex-grow: 1;
         }
         .form-group img{
-            left: 10px;
+            /* left: 10px;
             top: 50%;
             transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             display: inline-block;
-            margin: 10px;
+            margin-bottom: 30px; */
         }
 
         .form-group label {
-            display: block;
+            display: inline-block;
             margin-bottom: 5px;
             color: #666;
         }
         .form-group input, .form-group select{
-            display: flex;
-            align-items: center;
-            width: 584px;
-            height: 40px;
+            display: inline-block;
+            width: 585px;
+            height: 60px;
             gap: 10px;
             padding: 20px, 10px, 20px, 14px;
             border: none;
@@ -113,18 +114,22 @@
             font-size: 16px;
             color: #000000;
             background-color: #cccccc;
-            margin: 15px 0px;
+            margin: 15px 5px;
+        }
+        .form-group-name{
+            flex-grow: 1;
+            display: inline-block;
         }
         .phone-input {
-            display: flex;
-            width: 484px;
+           display: inline-block;
         }
         .phone-input select {
             width: 80px;
             margin-right: 10px;
         }
         .phone-input input {
-            flex-grow: 1;
+            flex-grow: 1; 
+            width: 480px;
         }
 
 
@@ -204,7 +209,7 @@
     function previewImage(event) {
         const reader = new FileReader();
         reader.onload = function() {
-            const avatarPreview = document.getElementById('image');
+            const avatarPreview = document.getElementById('avatarPreview');
             avatarPreview.src = reader.result;
         };
         reader.readAsDataURL(event.target.files[0]);
