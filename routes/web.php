@@ -11,3 +11,4 @@ Route::get('layouts.createContact', [CreateController::class, 'create'])->name('
 Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
 Route::get('/contacts/{contacts}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+// Route::get('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
