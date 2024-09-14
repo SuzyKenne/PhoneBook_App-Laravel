@@ -11,15 +11,23 @@ class ContactController extends Controller
     {
 
         $sort = $request->query('sort', 'asc'); // Default to ascending order
+        $query = $request->input('query');
+        $contacts = Contact::when($query, function ($q) use ($query) {
+            return $q->where('name', 'like', '%' . $query . '%');
+        })->orderBy('name', $sort)->get();
 
-        $contacts = Contact::orderBy('name', $sort)->get();
-
-        return view('home', compact('contacts', 'sort'));
+        return view('home', compact('contacts', 'sort', 'query'));
     
-        // Method to display all contacts
-        // $contacts = Contact::all();
-        // return view('home', compact('contacts'));
     }
+
+    // public function search(Request $request)
+    // {
+    //     $query = $request->input('query');
+    //     $contacts = Contact::where('name', 'LIKE', "%{$query}%")->get();
+
+
+    //     return view('home', compact('contacts', 'query'));
+    // }
 
     public function create()
     {
@@ -42,7 +50,6 @@ class ContactController extends Controller
         // Combine first and last name into a single "name" column
         $name = $validatedData['firstName'] . ' ' . $validatedData['lastName'];
 
-        // Combine country code and phone number
         $phoneNumber = $validatedData['number'];
 
         // Create a new Contact instance
@@ -101,21 +108,17 @@ class ContactController extends Controller
         $contact->email = $validatedData['email'];
 
         // Handle image upload if provided
-        if ($request->hasFile('image')) {
+         // Handle image upload if provided
+         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
-
-            // Delete the old image if it's not the default
-            if ($contact->image != 'images.png') {
-                $oldImagePath = public_path('images/' . $contact->image);
-                if (file_exists($oldImagePath)) {
-                    unlink($oldImagePath);
-                }
-            }
-                // Save the new image name
+            // Save the $imageName in the database, not the entire path
             $contact->image = $imageName;
-         }
+        } else {
+            // Set a default image if no image is uploaded
+            $contact->image ; // Path to your previous image
+        }
         
 
         // Save the contact
@@ -140,6 +143,7 @@ class ContactController extends Controller
 
        
         return redirect(url('/'))
-            ->with('success', 'Contact edited successfully.');
+            ->with('success', 'Contact deleted successfully.');
     }
+
 }
